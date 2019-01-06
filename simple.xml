@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='utf8'?>
+<job>
+    <description>Teste</description>
+    <parameters />
+    <steps>
+        <step>
+            <id>1</id>
+            <name>hello world</name>
+            <type>Print</type>
+            <parameters>
+                <parameter>
+                    <name>text</name>
+                    <type>str</type>
+                    <value>Hello World</value>
+                </parameter>
+            </parameters>
+            <fields />
+        </step>
+        <step>
+            <id>2</id>
+            <name>input</name>
+            <type>UserInput</type>
+            <parameters>
+                <parameter>
+                    <name>message</name>
+                    <type>str</type>
+                    <value>Insert a name: </value>
+                </parameter>
+            </parameters>
+            <fields>
+                <field>
+                    <name>input</name>
+                    <type>str</type>
+                    <variable>name</variable>
+                </field>
+            </fields>
+        </step>
+        <step>
+            <id>3</id>
+            <name>to upper</name>
+            <type>UpperCase</type>
+            <parameters>
+                <parameter>
+                    <name>text</name>
+                    <type>str</type>
+                    <value>{{name}}</value>
+                </parameter>
+            </parameters>
+            <fields>
+                <field>
+                    <name>result</name>
+                    <type>str</type>
+                    <variable>name_upper</variable>
+                </field>
+            </fields>
+        </step>
+        <step>
+            <id>4</id>
+            <name>print name in upper</name>
+            <type>Print</type>
+            <parameters>
+                <parameter>
+                    <name>text</name>
+                    <type>str</type>
+                    <value>The inserted name in upper case is: {{name_upper}}</value>
+                </parameter>
+            </parameters>
+            <fields />
+        </step>
+    </steps>
+    <fields />
+    <sequence>
+        <first>1</first>
+        <links>
+            <link>
+                <idfrom>1</idfrom>
+                <idto>2</idto>
+            </link>
+            <link>
+                <idfrom>2</idfrom>
+                <idto>3</idto>
+            </link>
+            <link>
+                <idfrom>3</idfrom>
+                <idto>4</idto>
+            </link>
+        </links>
+    </sequence>
+</job>

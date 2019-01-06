@@ -7,7 +7,7 @@ class JobRunner:
     re_values = re.compile(r"\{\{(\w+)\}\}")
 
     def run(self, job):
-        drun = dict([(s.id, s) for s in job.steps])
+        drun = {s.id: s for s in job.steps}
         first = job.sequence.first
         variables = {}
         self._run_step(job, first, drun, variables)
@@ -15,14 +15,16 @@ class JobRunner:
     def _run_step(self, job, sid, drun, variables):
         if sid in drun:
             step = drun[sid]
-            if step.type in execution_steps_definition:
-                es = execution_steps_definition[step.type]()
-                for p in step.parameters:
-                    setattr(es, p.name, self._parse_values(p.value, variables))
-                es.execute()
+            if step.type not in execution_steps_definition:
+                raise Exception("Step definition '{}' not found".format(step.type))
 
-                for field in step.fields:
-                    variables[field.variable] = getattr(es, field.name)
+            es = execution_steps_definition[step.type]()
+            for p in step.parameters:
+                setattr(es, p.name, self._parse_values(p.value, variables))
+            es.execute()
+
+            for field in step.fields:
+                variables[field.variable] = getattr(es, field.name)
 
             links = [link for link in job.sequence.links if link.idfrom == sid]
             for link in links:

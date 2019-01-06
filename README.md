@@ -1,3 +1,15 @@
 # Lazy ETL
 
-Extract Transform Load
+## Extract Transform Load
+
+At this time no virtual env or extra packages are required to run Lazy ETL.
+
+To run:
+``` bash
+python etl
+```
+
+To run specifying the job xml:
+``` bash
+python etl simple.xml
+```

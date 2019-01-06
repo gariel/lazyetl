@@ -1,2 +1,3 @@
-# lazyetl
-Lazy ETL
+# Lazy ETL
+
+Extract Transform Load

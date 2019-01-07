@@ -6,6 +6,9 @@ execution_steps_definition = {}
 
 def executionStep(key="", input={}, output={}):
     def decorator(clzz):
+        if not hasattr(clzz, "execute"):
+            raise Exception("Method 'execute' does not exists in Step Class " + clzz.name)
+
         nkey = key
         if not nkey:
             name = clzz.__name__

@@ -13,22 +13,21 @@ class JobRunner:
         self._run_step(job, first, drun, variables)
 
     def _run_step(self, job, sid, drun, variables):
-        if sid in drun:
-            step = drun[sid]
-            if step.type not in execution_steps_definition:
-                raise Exception("Step definition '{}' not found".format(step.type))
+        step = drun[sid]
+        if step.type not in execution_steps_definition:
+            raise Exception("Step definition '{}' not found".format(step.type))
 
-            es = execution_steps_definition[step.type]()
-            for p in step.parameters:
-                setattr(es, p.name, self._parse_values(p.value, variables))
-            es.execute()
+        es = execution_steps_definition[step.type]()
+        for p in step.parameters:
+            setattr(es, p.name, self._parse_values(p.value, variables))
+        es.execute()
 
-            for field in step.fields:
-                variables[field.variable] = getattr(es, field.name)
+        for field in step.fields:
+            variables[field.variable] = getattr(es, field.name)
 
-            links = [link for link in job.sequence.links if link.idfrom == sid]
-            for link in links:
-                self._run_step(job, link.idto, drun, variables.copy())
+        links = [link for link in job.sequence.links if link.idfrom == sid]
+        for link in links:
+            self._run_step(job, link.idto, drun, variables.copy())
 
     def _parse_values(self, valuesstr, variables):
         value = valuesstr

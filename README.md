@@ -13,3 +13,8 @@ To run specifying the job xml:
 ``` bash
 python etl simple.xml
 ```
+
+To run tests:
+``` bash
+python tests
+```

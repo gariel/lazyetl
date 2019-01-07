@@ -1,5 +1,5 @@
 
-from xxml import Serializator
+from xxml import XmlSerializator
 
 class Parameter:
     def __init__(self):
@@ -39,7 +39,7 @@ class Job:
         self.fields = []
         self.sequence = None
 
-class JobSerializator(Serializator):
+class JobSerializator(XmlSerializator):
     def __init__(self):
         super(JobSerializator, self).__init__()
 

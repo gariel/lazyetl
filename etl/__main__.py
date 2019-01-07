@@ -20,7 +20,7 @@ def test1():
     print(njob.sequence)
     jr.run(njob)
 
-def main(filename="simple.xml"):
+def main(filename="examples/simple.xml"):
     with io.open(filename) as f:
         xmltext = f.read()
 

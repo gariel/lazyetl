@@ -3,7 +3,7 @@ import re
 import io
 import xml.etree.ElementTree as ET
 
-class Serializator:
+class XmlSerializator:
     def __init__(self):
         self.classes = {}
 
@@ -45,6 +45,8 @@ class Serializator:
                 self._serialize_internal(child, v)
 
     def _deserialize_internal(self, node):
+        if not node.name in self.classes:
+            raise Exception("Type not added for deserialization: " + node.name)
         obj = self.classes[node.name]()
         fields = dir(obj)
         for childnode in node.children:
@@ -97,9 +99,9 @@ class XmlNode:
             return XmlNode(r)
 
     def _get(self, xPath, type):
-        node = self.getNode(xPath)
-        if node:
-            return type(node.value())
+        node = self.get_node(xPath)
+        if node and node.value:
+            return type(node.value)
         return type()
 
     def get_str(self, xPath): 
@@ -118,8 +120,9 @@ class XmlNode:
         return XmlNode(e)
 
     def remove_node(self, xPath):
-        e = root.find(xPath)
-        self.item.remove(e)
+        e = self.item.find(xPath)
+        parent = self.item.find(xPath + "/...")
+        parent.remove(e)
 
     def dynamic(self):
         return XmlDynamic(self)
@@ -150,28 +153,33 @@ class XmlDynamic(object):
     def __init__(self, node):
         self._node = node
 
-    def many(self, pattern):
-        return [Xml(xml=None, element=ee) for ee in self._node.item.ChildNodes if re.match(pattern, ee.Name)]
+    def _many(self, pattern=None):
+        validate = lambda x: True
+        if pattern:
+            re_many = re.compile(pattern)
+            validate = lambda x: re_many.match(x)
+
+        return [XmlDynamic(node) for node in self._node.children if validate(node.name)]
 
     def __str__(self):
-        return self.Value
+        return self._value
 
     def __call__(self):
-        return self.Value
+        return self._value
 
     def __exists(self):
         return self._node is not None
     _exists = property(__exists)
 
     def __name(self):
-        return self._node.item.Name
+        return self._node and self._node.name
     _name = property(__name)
 
     def __value(self):
-        e = self._node
-        return e and e.item.text
+        return self._node and self._node.value
+    _value = property(__value)
     
     def __getattribute__(self, name):
         if name.startswith("_") or name in dir(self):
             return object.__getattribute__(self, name)
-        return Xml2(e.getNode(name));
+        return XmlDynamic(self._node.get_node(name));

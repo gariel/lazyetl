@@ -2,7 +2,7 @@
 import importlib
 import pkgutil
 
-execution_steps_definition = {}
+definition = {}
 
 def executionStep(key="", input={}, output={}):
     def decorator(clzz):
@@ -16,7 +16,7 @@ def executionStep(key="", input={}, output={}):
 
         fields = input.copy()
         fields.update(output)
-        execution_steps_definition[nkey] = clzz
+        definition[nkey] = clzz
 
         clzz.__step_input__ = input
         clzz.__step_output__ = output

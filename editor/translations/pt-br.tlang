@@ -5,3 +5,7 @@ mainwindow.menu.file.open=&Abrir
 mainwindow.menu.file.save=&Salvar
 mainwindow.menu.file.saveas=Salvar Como
 mainwindow.menu.file.exit=&Sair
+steps.module.filesteps=Arquivo
+steps.module.consolesteps=Console
+steps.module.xmlsteps=XML
+steps.module.stringsteps=String

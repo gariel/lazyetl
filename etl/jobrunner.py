@@ -1,7 +1,7 @@
 import xxml
 import re
 
-from steps import execution_steps_definition
+from steps import definition
 
 class JobRunner:
     re_values = re.compile(r"\{\{(\w+)\}\}")
@@ -14,10 +14,10 @@ class JobRunner:
 
     def _run_step(self, job, sid, drun, variables):
         step = drun[sid]
-        if step.type not in execution_steps_definition:
+        if step.type not in definition:
             raise Exception("Step definition '{}' not found".format(step.type))
 
-        es = execution_steps_definition[step.type]()
+        es = definition[step.type]()
         for p in step.parameters:
             setattr(es, p.name, self._parse_values(p.type, p.value, variables))
         es.execute()

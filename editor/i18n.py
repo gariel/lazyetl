@@ -9,9 +9,11 @@ class LangText:
     def _loadText(self, text):
         self.translations = {k:s for k, s in [l.split("=", 2) for l in text.splitlines()]}
 
-    def get(self, key):
+    def get(self, key, fallback=None):
         if key in self.translations:
             return self.translations[key]
+        if fallback:
+            return fallback
         return "[{}]".format(key)
 
 
@@ -27,21 +29,22 @@ class LangTextFile(LangText):
         self._loadText(text)
 
 
-def translate(basekey, langTextClass=LangTextFile):
+def translate(langTextClass=LangTextFile):
     def decorator(window):
         lang_activators = {}
+        lang_fallback = {}
 
-        def lang(self, tkey, changer):
+        def lang(self, tkey, changer, fallback=None):
             key = tkey
-            if basekey:
-                key = "{}.{}".format(basekey, key)
             lang_activators[key] = changer
+            if fallback:
+                lang_fallback[key] = fallback
 
         def lang_set(self, langname):
-            langtext = langTextClass()
-            langtext.load(langname)
+            self.langtext = langTextClass()
+            self.langtext.load(langname)
             for key, activator in lang_activators.items():
-                activator(langtext.get(key))
+                activator(self.langtext.get(key, lang_fallback.get(key)))
 
         window.lang = lang
         window.lang_set = lang_set

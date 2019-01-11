@@ -24,7 +24,7 @@ class LangTextFile(LangText):
         langfile = os.path.join(self.langpath, "{}.tlang".format(langname))
         with io.open(langfile) as f:
             text = f.read()
-        _loadText(text)
+        self._loadText(text)
 
 
 def translate(basekey, langTextClass=LangTextFile):

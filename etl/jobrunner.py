@@ -19,7 +19,7 @@ class JobRunner:
 
         es = execution_steps_definition[step.type]()
         for p in step.parameters:
-            setattr(es, p.name, self._parse_values(p.value, variables))
+            setattr(es, p.name, self._parse_values(p.type, p.value, variables))
         es.execute()
 
         for field in step.fields:
@@ -29,8 +29,11 @@ class JobRunner:
         for link in links:
             self._run_step(job, link.idto, drun, variables.copy())
 
-    def _parse_values(self, valuesstr, variables):
-        value = valuesstr
-        for key in JobRunner.re_values.findall(valuesstr):
-            value = value.replace("{{" + key + "}}", variables.get(key, ""))
-        return value
+    def _parse_values(self, partype, valuekey, variables):
+        if partype == "str":
+            value = valuekey
+            for key in JobRunner.re_values.findall(valuekey):
+                value = value.replace("{{" + key + "}}", variables.get(key, ""))
+            return value
+        else:
+            return variables.get(valuekey, None)

@@ -1,24 +1,8 @@
 
 import io
 import sys
-from sample import sample_job
 from jobrunner import JobRunner
 from structure import JobSerializator
-
-def test1():
-    job = sample_job()
-
-    jr = JobRunner()
-    jr.run(job)
-
-    s = JobSerializator()
-    xjob = s.serialize(job)
-    print(xjob)
-    
-    njob = s.deserialize(xjob)
-    print(njob.description)
-    print(njob.sequence)
-    jr.run(njob)
 
 def main(filename="examples/simple.xml"):
     with io.open(filename) as f:

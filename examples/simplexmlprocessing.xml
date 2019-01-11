@@ -1,68 +1,79 @@
 <?xml version='1.0' encoding='utf8'?>
 <job>
-    <description>Simple</description>
+    <description>Simple Xml Processing (print this description to console)</description>
     <parameters />
     <steps>
         <step>
             <id>1</id>
-            <name>hello world</name>
-            <type>Print</type>
+            <name>read xml</name>
+            <type>ReadFile</type>
             <parameters>
                 <parameter>
-                    <name>text</name>
+                    <name>filename</name>
                     <type>str</type>
-                    <value>Hello World</value>
-                </parameter>
-            </parameters>
-            <fields />
-        </step>
-        <step>
-            <id>2</id>
-            <name>input</name>
-            <type>UserInput</type>
-            <parameters>
-                <parameter>
-                    <name>message</name>
-                    <type>str</type>
-                    <value>Insert a name: </value>
+                    <value>examples/simplexmlprocessing.xml</value>
                 </parameter>
             </parameters>
             <fields>
                 <field>
-                    <name>input</name>
+                    <name>content</name>
                     <type>str</type>
-                    <variable>name</variable>
+                    <variable>xmlstr</variable>
+                </field>
+            </fields>
+        </step>
+        <step>
+            <id>2</id>
+            <name>to Xml</name>
+            <type>TextToXml</type>
+            <parameters>
+                <parameter>
+                    <name>text</name>
+                    <type>str</type>
+                    <value>{{xmlstr}}</value>
+                </parameter>
+            </parameters>
+            <fields>
+                <field>
+                    <name>xml</name>
+                    <type>Xml</type>
+                    <variable>xml</variable>
                 </field>
             </fields>
         </step>
         <step>
             <id>3</id>
-            <name>to upper</name>
-            <type>UpperCase</type>
+            <name>to Xml</name>
+            <type>GetXmlFieldValue</type>
             <parameters>
                 <parameter>
-                    <name>text</name>
+                    <name>xml</name>
+                    <type>Xml</type>
+                    <value>xml</value>
+                </parameter>
+                <parameter>
+                    <name>xPath</name>
                     <type>str</type>
-                    <value>{{name}}</value>
+                    <value>description</value>
                 </parameter>
             </parameters>
             <fields>
                 <field>
-                    <name>result</name>
+                    <name>value</name>
                     <type>str</type>
-                    <variable>name_upper</variable>
+                    <variable>description</variable>
                 </field>
             </fields>
         </step>
         <step>
             <id>4</id>
-            <name>print name in upper</name>
+            <name>print description</name>
             <type>Print</type>
             <parameters>
                 <parameter>
                     <name>text</name>
                     <type>str</type>
-                    <value>The inserted name in upper case is: {{name_upper}}</value>
+                    <value>Description: {{description}}</value>
                 </parameter>
             </parameters>
             <fields />

@@ -4,8 +4,8 @@ from steps import executionStep
 
 
 @executionStep(
-    input={"filename", str},
-    output={"content", str})
+    input={"filename": str},
+    output={"content": str})
 class ReadFileStep:
     mode = "r"
     def execute(self):
@@ -13,16 +13,16 @@ class ReadFileStep:
             self.content = f.read()
 
 @executionStep(
-    input={"filename", str},
-    output={"content", bytes})
+    input={"filename": str},
+    output={"content": bytes})
 class ReadBinaryFileStep(ReadFileStep):
     mode = "rb"
 
 
 @executionStep(
-    input={"filename", str, 
-            "content", str,
-            "append", bool})
+    input={"filename": str, 
+            "content": str,
+            "append": bool})
 class WriteFileStep:
     modefunc = lambda append: "a" if append else "w"
     def execute(self):
@@ -30,8 +30,8 @@ class WriteFileStep:
             f.write(self.content)
 
 @executionStep(
-    input={"filename", str, 
-            "content", bytes,
-            "append", bool})
+    input={"filename": str, 
+            "content": bytes,
+            "append": bool})
 class WriteBinaryFileStep(WriteFileStep):
     modefunc = lambda append: "ab" if append else "wb"

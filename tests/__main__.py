@@ -2,7 +2,7 @@ import os
 import sys
 import unittest
 
-paths = ["etl"]
+paths = ["etl", "editor"]
 
 def run_tests():
     for path in paths:
@@ -10,6 +10,7 @@ def run_tests():
 
     loader = unittest.TestLoader()
     tests = loader.discover("tests", pattern='*_test.py')
+
     testRunner = unittest.TextTestRunner()
     testRunner.run(tests)
 

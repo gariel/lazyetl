@@ -2,7 +2,7 @@
 
 ## Extract Transform Load
 
-At this time no virtual env or extra packages are required to run Lazy ETL.
+At this time virtual env is only used for the editor.
 
 To run:
 ``` bash

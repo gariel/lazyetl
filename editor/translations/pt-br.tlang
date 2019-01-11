@@ -1,0 +1,7 @@
+mainwindow.title=Lazy ETL - Editor
+mainwindow.menu.file=&Arquivo
+mainwindow.menu.file.new=&Novo
+mainwindow.menu.file.open=&Abrir
+mainwindow.menu.file.save=&Salvar
+mainwindow.menu.file.saveas=Salvar Como
+mainwindow.menu.file.exit=&Sair

@@ -1,0 +1,7 @@
+mainwindow.title=Lazy ETL - Editor
+mainwindow.menu.file=&File
+mainwindow.menu.file.new=&New
+mainwindow.menu.file.open=&Open
+mainwindow.menu.file.save=&Save
+mainwindow.menu.file.saveas=Save &As
+mainwindow.menu.file.exit=&Exit

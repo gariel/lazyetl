@@ -1,6 +1,6 @@
 
 from steps import executionStep
-from xxml import Xml
+from xxml import Xml, XmlNode
 
 
 @executionStep(
@@ -24,3 +24,10 @@ class XmlToTextStep:
 class GetXmlFieldValueStep:
     def execute(self):
         self.value = self.xml.get_str(self.xPath)
+
+@executionStep(
+    input={"xml": Xml, "xPath": str},
+    output={"node": XmlNode})
+class XmlNodesStep:
+    def execute(self):
+        self.node = self.xml.get_nodes(self.xPath)

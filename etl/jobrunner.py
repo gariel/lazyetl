@@ -20,14 +20,22 @@ class JobRunner:
         es = definition[step.type]()
         for p in step.parameters:
             setattr(es, p.name, self._parse_values(p.type, p.value, variables))
+
         es.execute()
 
-        for field in step.fields:
-            variables[field.variable] = getattr(es, field.name)
+        def next_steps():
+            links = [link for link in job.sequence.links if link.idfrom == sid]
+            for link in links:
+                self._run_step(job, link.idto, drun, variables)
 
-        links = [link for link in job.sequence.links if link.idfrom == sid]
-        for link in links:
-            self._run_step(job, link.idto, drun, variables.copy())
+        if step.fields:
+            variables = variables.copy()
+            results = {field.name: getattr(es, field.name) for field in steps.fields}
+            # {"Xml": <>, "steps": [], "links": []}
+            variables.update(results)
+            next_steps()
+        else:
+            next_steps()
 
     def _parse_values(self, partype, valuekey, variables):
         if partype == "str":

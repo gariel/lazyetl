@@ -22,7 +22,7 @@ class JobRunnerTest(TestCase):
 
             def execute(self):
                 self.output = func(self.input)
-        steps.execution_steps_definition["Test"] = TestStep
+        steps.definition["Test"] = TestStep
 
     def create_step(self, id, input, outputvar):
         step = Step()

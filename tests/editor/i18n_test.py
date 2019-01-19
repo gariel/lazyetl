@@ -12,11 +12,11 @@ class TestLangText(LangText):
     def load(self, langname):
         super(TestLangText, self)._loadText(langs[langname])
 
-@translate("asd", TestLangText)
+@translate(TestLangText)
 class TestTranslation:
     def __init__(self):
         self.text = "notset"
-        self.lang("text", self.set_text)
+        self.lang("asd.text", self.set_text)
 
     def set_text(self, text):
         self.text = text

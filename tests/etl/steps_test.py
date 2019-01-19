@@ -2,7 +2,7 @@ from unittest import TestCase
 
 from steps import (
     executionStep,
-    execution_steps_definition
+    definition
 )
 
 class StepsTest(TestCase):
@@ -11,8 +11,8 @@ class StepsTest(TestCase):
         class Step:
             def execute(self):
                 pass
-        self.assertIn("Test", execution_steps_definition)
-        self.assertIs(execution_steps_definition["Test"], Step)
+        self.assertIn("Test", definition)
+        self.assertIs(definition["Test"], Step)
 
     def test_should_create_variables_when_instatiate_a_decorated_step(self):
         @executionStep(

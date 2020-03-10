@@ -97,7 +97,7 @@ class XmlDynamicTest(TestCase):
         self.xml = Xml()
         self.xml.loads(xmlstr)
         self.root = self.xml.dynamic()
-    
+
     def test_should_get_values(self):
         self.assertEqual(self.root.first.textValue._value, "asd")
         self.assertEqual(self.root.first.textValue(), "asd")
@@ -129,7 +129,7 @@ class SerializatorTest(TestCase):
                 self.simpletypes = simpletypes
 
         self.simpletype = SimpleType
-        self.serializator.add_class(SimpleType)
+        self.serializator.add_type(SimpleType)
 
     def test_should_serialize_simple_type(self):
         st = self.simpletype(

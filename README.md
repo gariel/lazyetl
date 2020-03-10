@@ -1,5 +1,13 @@
 # Lazy ETL
 
+-----
+
+# > For now this is work in progress <
+> Not working on master at the moment.  
+> For a working POC version, see branch [first_implementation](https://github.com/gariel/lazyetl/tree/first_implementation)
+
+-----
+
 ## Extract Transform Load
 
 At this time virtual env is only used for the editor.
